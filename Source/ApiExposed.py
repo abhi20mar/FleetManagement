@@ -23,10 +23,39 @@ db = client['fleet_management']
 collection = db['obd_data']
 
 class OBDData(BaseModel):
-    vehicle_id: int
-    speed: int
-    fuel_level: float
-    engine_temp: int
+    TIMESTAMP: float
+    MARK: str
+    CAR_YEAR: float
+    MODEL: str
+    ENGINE_POWER: str
+    AUTOMATIC: str
+    VEHICLE_ID: str
+    BAROMETRIC_PRESSURE: float
+    ENGINE_COOLANT_TEMP: float
+    FUEL_LEVEL: str
+    ENGINE_LOAD: str
+    AMBIENT_AIR_TEMP: float
+    ENGINE_RPM: float
+    INTAKE_MANIFOLD_PRESSURE: float
+    MAF: str
+    LONG_TERM_FUEL_TRIM_BANK_2: str
+    FUEL_TYPE: str
+    AIR_INTAKE_TEMP: float
+    FUEL_PRESSURE: float
+    SPEED: float
+    SHORT_TERM_FUEL_TRIM_BANK_2: str
+    SHORT_TERM_FUEL_TRIM_BANK_1: str
+    ENGINE_RUNTIME: str
+    THROTTLE_POS: str
+    DTC_NUMBER: str
+    TROUBLE_CODES: str
+    TIMING_ADVANCE: str
+    EQUIV_RATIO: str
+    MIN: float
+    HOURS: float
+    DAYS_OF_WEEK: float
+    MONTHS: float
+    YEAR: float
 
 @app.get("/obd_data/", response_model=List[OBDData])
 async def get_obd_data():
@@ -39,9 +68,9 @@ async def get_obd_data():
 
 @app.post("/obd_data/")
 async def insert_obd_data(obd_data: OBDData):
-    obd_data_dict = obd_data.dict()
-    collection.insert_one(obd_data_dict)
-    return {"message": "OBD data inserted successfully", "data": obd_data_dict}
+    # obd_data_dict = obd_data.dict()
+    collection.insert_one(obd_data)
+    return {"message": "OBD data inserted successfully", "data": obd_data}
 
 @app.on_event("shutdown")
 def shutdown_db():
